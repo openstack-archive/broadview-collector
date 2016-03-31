@@ -19,7 +19,13 @@ import unittest
 import datetime
 import time
 
+
 class BSTToMonasca(BroadViewSerializerBase):
+    '''
+    Class that converts BST object model to OpeStack Monasca metrics.
+    See broadview-collector/doc/bst_to_monasca_serializer.md for documentation
+    '''
+
     def __init__(self):
         pass
 
