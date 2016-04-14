@@ -8,7 +8,7 @@ graph.
 
 What we are aiming for is represented in the following image:
 
-[Grafana displaying BST microburst data](docs/images/microbursts/microbursts.png)
+[Grafana displaying BST microburst data](images/microbursts/screen.png)
 
 The steps provided in this document do not require anything other than 
 what is provided in the broadview and monasca github repositories, and 
@@ -63,7 +63,7 @@ On the left side of the screen you should see a "Dashboards" and "Data Sources".
 Click on Data Sources. Then, at the top of the screen, click on "Add new".
 
 Fill out the settings for the data sources as shown in the figure
-[Grafana data source](docs/images/microbursts/datasource.png)
+[Grafana data source](images/microbursts/datasource.png)
 
 Instead of supplying an auth token, you might want to simply click on the
 "Keystone Auth" checkbox. However, a bug at the time of writing this 
@@ -92,14 +92,13 @@ Starting the Simulator
 At this point, it will be good to start the simulator to generate simulated
 microburst activity. Go to where broadview-collector has been cloned from
 github by devstack (likely /opt/broadview-collector), or clone it yourself.
-Then, cd into broadview-colle4cotr/broadview_collector/tools. Edit the script
-burst.py to set the host and port variables to the IP address and port that
+Then, cd into broadview-collector/broadview_collector/tools. Edit the script
+bst_burst.py to set the host and port variables to the IP address and port that
 the collector is running on, then run the following in a bash window:
 
     $ while true; do sleep 90; python bst_burst.py; done
 
-This will get data flowing into the collector and then into the monasca
-databases. 
+This will get data flowing into the collector and then into the monasca API. 
 
 Creating a Dashboard
 --------------------
@@ -125,7 +124,7 @@ This button is used to select a datasource. Click on the button and
 select "broadview bst", which is the datasource we created above. See
 the screenshot below.
 
-[Grafana Dashboard Editor](docs/images/microbursts/dashboard.png)
+[Grafana Dashboard Editor](images/microbursts/dashboard.png)
 
 Using the editor, set Function to "none", select "broadview.bst.device" as
 the Metric, and set the Group By Time text field to 5000. 
@@ -141,7 +140,7 @@ In the Dimensions section, configure the following query
 "stat=cpu-buffer-count". The screen should look something like the
 following (depending on what data has been transmitted to the collector):
 
-[Grafana Showing Data](docs/images/microbursts/data.png)
+[Grafana Showing Data](images/microbursts/data.png)
 
 To make the graphic update frequently, use the controls that are in the
 upper right hand corner of the grafana dashboard viewer. They can be used
