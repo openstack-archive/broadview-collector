@@ -19,7 +19,7 @@ import unittest
 
 # Change these to the host and port the collector is listening on
 
-host = "10.14.245.57"
+host = "10.14.244.207"
 port = 8082
 
 '''

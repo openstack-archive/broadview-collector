@@ -56,6 +56,10 @@ function install_broadview_collector {
     install_broadview_lib
 
     install_broadview_collector_python
+
+    if is_service_enabled horizon; then
+        install_broadview_collector_horizon_ui
+    fi
 }
 
 function post_config_broadview_collector {
@@ -72,12 +76,11 @@ function clean_broadview_collector {
 
     unstack_broadview_collector
 
-# XXX this comnes later...
-#    if is_service_enabled horizon; then
-#
-#        clean_broadview_horizon_ui
-#
-#    fi
+    if is_service_enabled horizon; then
+
+        clean_broadview_horizon_ui
+
+    fi
 
     clean_broadview_collector_python
 
@@ -133,6 +136,9 @@ function install_broadview_lib {
     BROADVIEW_LIB_SRC_DIST=$(ls -td /opt/broadview-lib/dist/broadview-lib-*.tar.gz)
 
     pip_install $BROADVIEW_LIB_SRC_DIST
+    sudo cp /opt/broadview-lib/broadview_lib/tools/bv-bstctl.py /usr/local/bin
+    sudo chown $STACK_USER:broadview_collector /usr/local/bin/bv-bstctl.py
+    sudo chmod 755 /usr/local/bin/bv-bstctl.py
 }
 
 function clean_broadview_lib {
@@ -167,7 +173,9 @@ function install_broadview_collector_python {
 
     sudo chmod 0755 /var/log/broadview-collector
 
-    sudo cp -f "${BROADVIEW_COLLECTOR_BASE}"/broadview-collector/broadview_collector/config/broadviewcollector.conf /etc/broadviewcollector.conf
+    if [[ ! -f /etc/broadviewcollector.conf ]]; then
+    	sudo cp -f "${BROADVIEW_COLLECTOR_BASE}"/broadview-collector/broadview_collector/config/broadviewcollector.conf /etc/broadviewcollector.conf
+    fi
 
     sudo chown root:broadview_collector /etc/broadviewcollector.conf
 
@@ -209,19 +217,26 @@ function install_broadview_collector_horizon_ui {
 
     echo_summary "Install BroadView Collector Horizon UI"
 
-    sudo mkdir -p /opt/broadview_collector-horizon-ui || true
+    sudo mkdir -p "${BROADVIEW_COLLECTOR_BASE}"/broadview_collector-horizon-ui || true
 
-    sudo chown $STACK_USER:broadview_collector /opt/broadview_collector-horizon-ui
+    sudo chown $STACK_USER:broadview_collector "${BROADVIEW_COLLECTOR_BASE}"/broadview_collector-horizon-ui 
 
-    (cd /opt/broadview_collector-horizon-ui ; virtualenv .)
+    if [[ ! -d "${BROADVIEW_COLLECTOR_BASE}"/broadview_collector-horizon-ui/broadview-ui ]]; then
 
-    (cd /opt/broadview_collector-horizon-ui ; sudo -H ./bin/pip install broadview_collector-ui)
+        sudo git clone https://git.openstack.org/openstack/broadview-ui.git  "${BROADVIEW_COLLECTOR_BASE}"/broadview_collector-horizon-ui/broadview-ui
+    fi
 
-    sudo ln -sf /opt/broadview_collector-horizon-ui/lib/python2.7/site-packages/monitoring/enabled/_50_admin_add_monitoring_panel.py "${BROADVIEW_COLLECTOR_BASE}"/horizon/openstack_dashboard/local/enabled/_50_admin_add_monitoring_panel.py
+    if [[ ! -f /etc/broadviewswitches.conf ]]; then
+    	sudo cp "${BROADVIEW_COLLECTOR_BASE}"/broadview_collector-horizon-ui/broadview-ui/broadview/config/broadviewswitches.conf /etc/broadviewswitches.conf
+        sudo chown $STACK_USER:broadview_collector /etc/broadviewswitches.conf
+    fi
 
-    sudo ln -sf /opt/broadview_collector-horizon-ui/lib/python2.7/site-packages/monitoring/static/monitoring "${BROADVIEW_COLLECTOR_BASE}"/horizon/monitoring
+    sudo cp "${BROADVIEW_COLLECTOR_BASE}"/broadview_collector-horizon-ui/broadview-ui/_50_broadview.py "${BROADVIEW_COLLECTOR_BASE}"/horizon/openstack_dashboard/enabled/
+    sudo chown $STACK_USER:broadview_collector "${BROADVIEW_COLLECTOR_BASE}"/horizon/openstack_dashboard/enabled/_50_broadview.py
 
-    sudo PYTHONPATH=/opt/broadview_collector-horizon-ui/lib/python2.7/site-packages python "${BROADVIEW_COLLECTOR_BASE}"/horizon/manage.py compress --force
+    sudo cp -r "${BROADVIEW_COLLECTOR_BASE}"/broadview_collector-horizon-ui/broadview-ui/broadview "${BROADVIEW_COLLECTOR_BASE}"/horizon/openstack_dashboard/dashboards
+
+    sudo chown -R $STACK_USER:broadview_collector "${BROADVIEW_COLLECTOR_BASE}"/horizon/openstack_dashboard/dashboards/broadview
 
     sudo service apache2 restart
 
@@ -235,12 +250,11 @@ function clean_broadview_collector_horizon_ui {
 
     echo_summary "Clean BroadView Collector Horizon UI"
 
-    sudo rm -f "${BROADVIEW_COLLECTOR_BASE}"/horizon/openstack_dashboard/local/enabled/_50_admin_add_monitoring_panel.py
+    sudo rm -f "${BROADVIEW_COLLECTOR_BASE}"/horizon/openstack_dashboard/enabled/_50_broadview.py
 
-    sudo rm -f "${BROADVIEW_COLLECTOR_BASE}"/horizon/monitoring
+    sudo rm -rf "${BROADVIEW_COLLECTOR_BASE}"/horizon/openstack_dashboard/dashboards/broadview
 
-    sudo rm -rf /opt/broadview_collector-horizon-ui
-
+    sudo rm -rf "${BROADVIEW_COLLECTOR_BASE}"/broadview_collector-horizon-ui
 }
 
 # Allows this script to be called directly outside of
