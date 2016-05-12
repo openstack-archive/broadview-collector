@@ -19,7 +19,7 @@ import time
 
 # Change these to the host and port the collector is listening on
 
-host = "10.14.244.207"
+host = "172.16.170.184"
 port = 8082
 
 '''

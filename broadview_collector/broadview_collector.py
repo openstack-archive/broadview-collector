@@ -105,7 +105,7 @@ class BroadViewCollector(object):
                 LOG.info("Unable to load handler %s: %s" % (x, e))
                 exit()
 
-    def handlePOST(self, path, ctype, length, data):
+    def handlePOST(self, path, ctype, length, src, data):
         '''
         find a handler that can handle the request, and then if
         successful, send it to all publishers
@@ -119,7 +119,7 @@ class BroadViewCollector(object):
             o, handled = x.handlePOST(path, ctype, length, data)
             if handled: 
                 for y in self._publishers:
-                    code = y.publish(o)
+                    code = y.publish(src, o)
 		    if not code == 200:
                         LOG.info("handlePOST: {} failed to publish, code: {}".format(y, code))
                 retcode = 200
@@ -137,7 +137,7 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
         ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
         length = int(self.headers.getheader('content-length'))
         data = ast.literal_eval(json.loads(self.rfile.read(length)))
-        code = collector.handlePOST(self.path, ctype, length, data)
+        code = collector.handlePOST(self.path, ctype, length, self.client_address[0], data )
         data = json.dumps({})
         self.send_response(code)
         self.send_header('Content-Type', 'application/json')

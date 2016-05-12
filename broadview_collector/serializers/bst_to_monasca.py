@@ -29,7 +29,7 @@ class BSTToMonasca(BroadViewSerializerBase):
     def __init__(self):
         pass
 
-    def __serializeToJSON(self, report, data):
+    def __serializeToJSON(self, host, report, data):
         ret = []
         timestamp = time.mktime(data.getTimestamp()) * 1000
         asic = data.getASICId()
@@ -41,6 +41,7 @@ class BSTToMonasca(BroadViewSerializerBase):
             m["timestamp"] = timestamp
             m["dimensions"] = {}
             m["dimensions"]["asic-id"] = asic
+            m["dimensions"]["bv-agent"] = host
             m["value"] = x.getValue()
             ret.append(m)
 
@@ -52,6 +53,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["port"] = y.getPort()
                 m["dimensions"]["priority-group"] = y.getPriorityGroup()
                 m["dimensions"]["stat"] = "um-share-buffer-count"
@@ -63,6 +65,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["port"] = y.getPort()
                 m["dimensions"]["priority-group"] = y.getPriorityGroup()
                 m["dimensions"]["stat"] = "um-headroom-buffer-count"
@@ -77,6 +80,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["port"] = y.getPort()
                 m["dimensions"]["service-pool"] = y.getServicePool()
                 m["dimensions"]["stat"] = "um-share-buffer-count"
@@ -91,6 +95,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["service-pool"] = y.getServicePool()
                 m["dimensions"]["stat"] = "um-share-buffer-count"
                 m["value"] = y.getUmShareBufferCount()
@@ -104,6 +109,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["queue"] = y.getQueue()
                 m["dimensions"]["stat"] = "cpu-buffer-count"
                 m["value"] = y.getCPUBufferCount()
@@ -114,6 +120,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["queue"] = y.getQueue()
                 m["dimensions"]["stat"] = "cpu-queue-entries"
                 m["value"] = y.getCPUQueueEntries()
@@ -127,6 +134,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["port"] = y.getPort()
                 m["dimensions"]["queue"] = y.getQueue()
                 m["dimensions"]["stat"] = "mc-buffer-count"
@@ -138,6 +146,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["port"] = y.getPort()
                 m["dimensions"]["queue"] = y.getQueue()
                 m["dimensions"]["stat"] = "mc-queue-entries"
@@ -152,6 +161,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["port"] = y.getPort()
                 m["dimensions"]["service-pool"] = y.getServicePool()
                 m["dimensions"]["stat"] = "um-share-buffer-count"
@@ -163,6 +173,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["port"] = y.getPort()
                 m["dimensions"]["service-pool"] = y.getServicePool()
                 m["dimensions"]["stat"] = "mc-share-buffer-count"
@@ -174,6 +185,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["port"] = y.getPort()
                 m["dimensions"]["service-pool"] = y.getServicePool()
                 m["dimensions"]["stat"] = "mc-share-queue-entries"
@@ -188,6 +200,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["queue"] = y.getQueue()
                 m["dimensions"]["stat"] = "rqe-buffer-count"
                 m["value"] = y.getRQEBufferCount()
@@ -198,6 +211,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["queue"] = y.getQueue()
                 m["dimensions"]["stat"] = "rqe-queue-entries"
                 m["value"] = y.getRQEQueueEntries()
@@ -211,6 +225,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["service-pool"] = y.getServicePool()
                 m["dimensions"]["stat"] = "um-share-buffer-count"
                 m["value"] = y.getUmShareBufferCount()
@@ -221,6 +236,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["service-pool"] = y.getServicePool()
                 m["dimensions"]["stat"] = "mc-share-buffer-count"
                 m["value"] = y.getMCShareBufferCount()
@@ -231,6 +247,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["service-pool"] = y.getServicePool()
                 m["dimensions"]["stat"] = "mc-share-queue-entries"
                 m["value"] = y.getMCShareQueueEntries()
@@ -244,6 +261,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["port"] = y.getPort()
                 m["dimensions"]["queue"] = y.getQueue()
                 m["dimensions"]["stat"] = "uc-queue-buffer-count"
@@ -258,6 +276,7 @@ class BSTToMonasca(BroadViewSerializerBase):
                 m["timestamp"] = timestamp
                 m["dimensions"] = {}
                 m["dimensions"]["asic-id"] = asic
+                m["dimensions"]["bv-agent"] = host
                 m["dimensions"]["queue-group"] = y.getQueueGroup()
                 m["dimensions"]["stat"] = "uc-buffer-count"
                 m["value"] = y.getUcBufferCount()
@@ -265,16 +284,16 @@ class BSTToMonasca(BroadViewSerializerBase):
 
         return json.dumps(ret)
 
-    def _toReport(self, data):
-        return self.__serializeToJSON("bst-report", data)
+    def _toReport(self, host, data):
+        return self.__serializeToJSON(host, "bst-report", data)
 
-    def _toTrigger(self, data):
-        return self.__serializeToJSON("bst-trigger", data)
+    def _toTrigger(self, host, data):
+        return self.__serializeToJSON(host, "bst-trigger", data)
 
-    def _toThreshold(self, data):
-        return self.__serializeToJSON("bst-thresholds", data)
+    def _toThreshold(self, host, data):
+        return self.__serializeToJSON(host, "bst-thresholds", data)
 
-    def serialize(self, data):
+    def serialize(self, host, data):
         # serialize a parsed BST report to Monasca metrics
         ret = (False, None)
 
@@ -282,11 +301,11 @@ class BSTToMonasca(BroadViewSerializerBase):
 
         s = None        
         if rpt == ReportTypes.Report:
-            s = self._toReport(data)
+            s = self._toReport(host, data)
         elif rpt == ReportTypes.Trigger:
-            s = self._toTrigger(data)
+            s = self._toTrigger(host, data)
         elif rpt == ReportTypes.Threshold:
-            s = self._toThreshold(data)
+            s = self._toThreshold(host, data)
 
         if s:
             ret = (True, s)
@@ -299,6 +318,7 @@ class BSTToMonasca(BroadViewSerializerBase):
 class TestSerializer(unittest.TestCase):
 
     def setUp(self):
+        self._host = "127.0.0.1"
         self.bst_report1 = {
             "jsonrpc": "2.0",
             "method": "get-bst-report",
@@ -836,7 +856,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.bst_report1)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 1)
@@ -861,7 +881,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.bst_report2)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 4)
@@ -908,7 +928,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.bst_report3)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 2)
@@ -920,7 +940,7 @@ class TestSerializer(unittest.TestCase):
             self.assertTrue("name" in x)
             self.assertTrue("value" in x)
             self.assertTrue("dimensions" in x)
-            t1 = datetime.datetime.fromtimestamp(int(x["timestamp"]))
+            t1 = datetime.datetime.fromtimestamp(int(x["timestamp"]) / 1000)
             x["timestamp"] = x["timestamp"] / 1000
             t1 = t1.strftime("%Y-%m-%d - %H:%M:%S")
             t2 = y["time-stamp"].strip()
@@ -950,7 +970,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.bst_report4)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 2)
@@ -990,7 +1010,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.bst_report5)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 2)
@@ -1026,7 +1046,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.bst_report6)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 6)
@@ -1080,7 +1100,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.bst_report7)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 6)
@@ -1130,7 +1150,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.bst_report8)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 4)
@@ -1173,7 +1193,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.bst_report9)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 6)
@@ -1220,7 +1240,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.bst_report10)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 1)
@@ -1256,7 +1276,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.bst_report11)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 1)
@@ -1290,7 +1310,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.trigger1)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 1)
@@ -1315,7 +1335,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.trigger2)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 4)
@@ -1362,7 +1382,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.trigger3)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 2)
@@ -1404,7 +1424,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.trigger4)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 2)
@@ -1444,7 +1464,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.trigger5)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 2)
@@ -1480,7 +1500,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.trigger6)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 6)
@@ -1534,7 +1554,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.trigger7)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 6)
@@ -1584,7 +1604,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.trigger8)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 4)
@@ -1627,7 +1647,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.trigger9)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 6)
@@ -1674,7 +1694,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.trigger10)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 1)
@@ -1710,7 +1730,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.trigger11)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 1)
@@ -1744,7 +1764,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.thresholds1)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 1)
@@ -1769,7 +1789,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.thresholds2)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 4)
@@ -1816,7 +1836,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.thresholds3)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 2)
@@ -1858,7 +1878,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.thresholds4)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 2)
@@ -1898,7 +1918,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.thresholds5)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 2)
@@ -1934,7 +1954,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.thresholds6)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 6)
@@ -1988,7 +2008,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.thresholds7)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 6)
@@ -2038,7 +2058,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.thresholds8)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 4)
@@ -2081,7 +2101,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.thresholds9)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 6)
@@ -2128,7 +2148,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.thresholds10)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 1)
@@ -2164,7 +2184,7 @@ class TestSerializer(unittest.TestCase):
         rep = BSTParser()
         rep.process(self.thresholds11)
         serializer = BSTToMonasca()
-        ret = serializer.serialize(rep)
+        ret = serializer.serialize(self._host, rep)
         self.assertEqual(ret[0], True)
         data = json.loads(ret[1])
         self.assertTrue(len(data) == 1)

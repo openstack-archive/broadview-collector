@@ -16,6 +16,6 @@ class BroadViewPublisherBase(object):
     def __init__(self):
         pass
 
-    def publish(self, data):
+    def publish(self, host, data):
         raise NotImplementedError
 

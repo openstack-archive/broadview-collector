@@ -59,11 +59,11 @@ class BroadViewPublisher(BroadViewPublisherBase):
             LOG.error("BroadViewPublisher: failed to parse config")
             self._monasca_client = None
 
-    def publish(self, data):
+    def publish(self, host, data):
         code = 500
         if self._monasca_client:
 	    code = 200
-            success, sdata = BSTToMonasca().serialize(data)
+            success, sdata = BSTToMonasca().serialize(host, data)
 	    sdata = json.loads(sdata)
             if success: 
 	        for x in sdata:

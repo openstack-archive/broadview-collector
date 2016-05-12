@@ -48,10 +48,10 @@ class BroadViewPublisher(BroadViewPublisherBase):
         if self._f:
             self._f.close()
 
-    def publish(self, data):
+    def publish(self, host, data):
         LOG.info("log publisher: publish")
         code = 200
-        success, sdata = BSTToMonasca().serialize(data)
+        success, sdata = BSTToMonasca().serialize(host, data)
         sdata = json.loads(sdata)
         if success: 
             for x in sdata:

@@ -29,9 +29,9 @@ class BroadViewPublisher(BroadViewPublisherBase):
     def __del__(self):
         syslog.closelog()
 
-    def publish(self, data):
+    def publish(self, host, data):
         code = 200
-        success, sdata = BSTToMonasca().serialize(data)
+        success, sdata = BSTToMonasca().serialize(host, data)
         sdata = json.loads(sdata)
         if success:
             for x in sdata:

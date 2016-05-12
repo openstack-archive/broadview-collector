@@ -16,7 +16,7 @@ class BroadViewSerializerBase(object):
     def __init__(self):
         pass
 
-    def serialize(self, data):
+    def serialize(self, host, data):
         '''
         return a 2-tuple (ret, jsonret)
 
