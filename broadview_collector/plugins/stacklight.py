@@ -31,11 +31,20 @@ class BroadViewPublisher(BroadViewPublisherBase):
         try:
             bvcfg = ConfigParser.ConfigParser()
             bvcfg.read("/etc/broadviewcollector.conf")
-            self._ipaddr = bvcfg.get("stacklight", "ip_address")
-            self._port = bvcfg.get("stacklight", "port") 
-            self._timeout = bvcfg.get("stacklight", "timeout") 
+            try:
+                self._ipaddr = bvcfg.get("stacklight", "ip_address")
+            except:
+                LOG.info("BroadViewPublisher: unable to read stacklight ip_address")
+            try:
+                self._port = bvcfg.get("stacklight", "port") 
+            except:
+                LOG.info("BroadViewPublisher: unable to read stacklight port")
+            try:
+                self._timeout = bvcfg.get("stacklight", "timeout") 
+            except:
+                LOG.info("BroadViewPublisher: unable to read stacklight timeout")
         except:
-            LOG.error("BroadViewPublisher: unable to read configuration")
+            LOG.error("BroadViewPublisher: unable to read stacklight configuration")
 
     def __init__(self):
         self.readConfig()
