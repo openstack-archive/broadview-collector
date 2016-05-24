@@ -1,0 +1,8 @@
+Code-Review+2: Vitaliy Kharechko <vitaliy.kharechko@axilera.com>
+Workflow+1: Syd Logan <syd.logan@broadcom.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Tue, 24 May 2016 17:18:41 +0000
+Reviewed-on: https://review.openstack.org/320405
+Project: openstack/broadview-collector
+Branch: refs/heads/master
