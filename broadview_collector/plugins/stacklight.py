@@ -18,7 +18,10 @@ import json
 import ConfigParser
 import requests
 
-from oslo_log import log 
+try:
+    from oslo_log import log 
+except:
+    import logging as log 
 
 LOG = log.getLogger(__name__)
 

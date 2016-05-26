@@ -28,19 +28,31 @@ import os
 import sys
 from importlib import import_module
 import ast
-from oslo_log import log as logging
-from oslo_config import cfg
+
+try:
+    from oslo_log import log as logging
+except:
+    import logging
+
+osloConfig = True
+
+try:
+    from oslo_config import cfg
+except:
+    osloConfig = False
 
 LOG = logging.getLogger(__name__)
 
 class BroadViewCollector(object):
     def __init__(self):
-        logging.register_options(cfg.CONF)
-        logging.set_defaults()
-        cfg.CONF(args=[],
-                project="broadview_collector",
-                default_config_files=["/etc/broadviewcollector.conf"])
-        logging.setup(cfg.CONF, 'broadview_collector')
+        if osloConfig: 
+            logging.register_options(cfg.CONF)
+            logging.set_defaults()
+            cfg.CONF(args=[],
+                     project="broadview_collector",
+                     default_config_files=["/etc/broadviewcollector.conf"])
+            logging.setup(cfg.CONF, 'broadview_collector')
+
         self._publishers = [] 
         self._handlers = [] 
 

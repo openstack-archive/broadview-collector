@@ -19,7 +19,11 @@ from broadviewpublisherbase import BroadViewPublisherBase
 
 from broadview_collector.serializers.bst_to_monasca import BSTToMonasca
 import json
-from oslo_log import log
+try:
+    from oslo_log import log
+except:
+    import logging as log
+
 import ConfigParser
 
 LOG = log.getLogger(__name__)

@@ -13,12 +13,16 @@
 # limitations under the License.
 
 from broadviewpublisherbase import BroadViewPublisherBase
-from kafka import KafkaProducer
+import kafka 
 from broadview_collector.serializers.bst_to_monasca import BSTToMonasca
 import json
 import ConfigParser
+import sys
 
-from oslo_log import log 
+try:
+    from oslo_log import log 
+except:
+    import logging as log
 
 LOG = log.getLogger(__name__)
 
@@ -35,7 +39,7 @@ class BroadViewPublisher(BroadViewPublisherBase):
 
     def getKafkaProducer(self):
         try:
-	    self._producer = KafkaProducer(bootstrap_servers=['{}:{}'.format(self._ip_address, self._port)])
+	    self._producer = kafka.KafkaProducer(bootstrap_servers=['{}:{}'.format(self._ip_address, self._port)])
         except kafka.errors.NoBrokersAvailable as e:
             LOG.error("BroadViewPublisher: NoBrokersAvailable {}".format(e))
         except:
@@ -49,7 +53,6 @@ class BroadViewPublisher(BroadViewPublisherBase):
         self._producer = None
 
     def publish(self, host, data):
-        LOG.info('kafka publish enter')
         code = 500
         #  get a producer if needed
         if not self._producer:
@@ -66,7 +69,6 @@ class BroadViewPublisher(BroadViewPublisherBase):
                         LOG.info('unable to send to kafka topic {}: {}'.format(self._topic, sys.exc_info()[0]))
             else:
                 code = 500
-        LOG.info('kafka publish code {}'.format(code))
         return code
 
     def __repr__(self):

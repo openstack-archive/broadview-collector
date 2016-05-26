@@ -27,7 +27,7 @@ and topic and will override the default settings of the plugin:
     # ip address, port, and topic for kafka
 
     ip_address: 192.168.0.120
-    port: 8088
+    port: 9092
     topic: broadview-bst
 
 You'll also need to enable the kafka plugin in /etc/broadviewcollector.conf.
@@ -45,6 +45,8 @@ To test out, or experiment with, the kafka publisher plugin, consider doing
 the following:
 
 * Install broadview-collector. See the instructions in the main README.md
+* Install the Python kafka module:
+    $ sudo easy_install kafka
 * Configure the collector for kafka as described above.
 * Install kafka. There are tutorials on the web for this. One that is known
 to work for Ubuntu 14.04 can be found at DigitalOcean's website:
@@ -59,9 +61,9 @@ are using the DigitalOcean kafka tutorial:
 * In a separate terminal window, run the following to view the data that is
 being written to the kafka queue by BroadView Collector:
 
-    $ ~/kafka/bin/kafka-console-consumer --zookeeper 127.0.0.1:2181 --topic broadview.bst 
+    $ ~/kafka/bin/kafka-console-consumer --zookeeper 127.0.0.1:2181 --topic broadview-bst 
 
-Note in the above, the path to kafka-console-consumber may be different based
+Note in the above, the path to kafka-console-consumer may be different based
 on how you installed kafka. The IP address and port should work if you 
 installed everything on a single host, and zookeeper is configured to use the 
 default listen port of 2181. On Ubuntu 14.04, the settings can be found in
