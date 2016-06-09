@@ -146,15 +146,30 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
         pass
 
     def do_POST(self):
-        ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
-        length = int(self.headers.getheader('content-length'))
-        data = ast.literal_eval(json.loads(self.rfile.read(length)))
-        code = collector.handlePOST(self.path, ctype, length, self.client_address[0], data )
-        data = json.dumps({})
-        self.send_response(code)
-        self.send_header('Content-Type', 'application/json')
-        self.end_headers()
-        self.wfile.write(data)
+        try:
+            ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
+        except:
+            e = sys.exc_info()[0]
+            LOG.info("broadview_collector: do_POST missing content-type {}".format(e))
+            ctype = None
+        try:
+            length = int(self.headers.getheader('content-length'))
+        except:
+            e = sys.exc_info()[0]
+            LOG.info("broadview_collector: do_POST missing content-length {}".format(e))
+            length = 0
+        if ctype and "json" in ctype.lower():
+           data = ast.literal_eval(json.loads(self.rfile.read(length)))
+           code = collector.handlePOST(self.path, ctype, length, self.client_address[0], data )
+           data = json.dumps({})
+           try:
+               self.send_response(code)
+               self.send_header('Content-Type', 'application/json')
+               self.end_headers()
+               self.wfile.write(data)
+           except:
+               e = sys.exc_info()[0]
+               LOG.info("broadview_collector: do_POST unable to write response {}".format(e))
 
         return
 
