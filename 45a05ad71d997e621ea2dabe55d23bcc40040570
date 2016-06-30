@@ -1,0 +1,8 @@
+Code-Review+2: Volodymyr Samotiy <volodymyr.samotiy@axilera.com>
+Workflow+1: Syd Logan <syd.logan@broadcom.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Thu, 30 Jun 2016 17:54:38 +0000
+Reviewed-on: https://review.openstack.org/335816
+Project: openstack/broadview-collector
+Branch: refs/heads/master
