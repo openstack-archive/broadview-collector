@@ -64,6 +64,9 @@ Two example publishers are provided:
 * monascapublisher: targets the OpenStack Monasca Python metric publishing API
 * logpublisher: appends data to a configured text file
 
+For a complete list of publishers, look in the broadview_collector/plugins 
+directory.
+
 To use a publisher, it must be added to the comma-separated list of publishers
 listed in /etc/broadviewcollector.conf, and the collector must be restarted. 
 
@@ -129,32 +132,32 @@ products that they support, contact your supplier for more details.
 
 2. Install broadview-lib:
 
- $ git clone https://github.com/openstack/broadview-lib.git
- $ cd broadview-lib
- $ python setup.py install
+    $ git clone https://github.com/openstack/broadview-lib.git
+    $ cd broadview-lib
+    $ python setup.py install
 
 3. Install broadview-collector
 
- $ git clone https://github.com/openstack/broadview-collector.git
- $ cd broadview-collector
- $ python setup.py install
+    $ git clone https://github.com/openstack/broadview-collector.git
+    $ cd broadview-collector
+    $ python setup.py install
 
 4. Copy the file broadview_collector/config/broadviewcollector.conf to /etc
 
- $ sudo cp broadview_collector/config/broadviewcollector.conf /etc
+    $ sudo cp broadview_collector/config/broadviewcollector.conf /etc
 
 5. Edit /etc/broadviewcollector.conf as needed
 
- $ sudo vi /etc/broadviewcollector.conf
+    $ sudo vi /etc/broadviewcollector.conf
 
 6. Copy broadview collector application to /usr/local/bin:
 
- $ sudo cp broadview_collector/bin/bvcollect.py /usr/local/bin
- $ sudo chmod 755 /usr/local/bin/bvcollect.py
+    $ sudo cp broadview_collector/bin/bvcollect.py /usr/local/bin
+    $ sudo chmod 755 /usr/local/bin/bvcollect.py
 
 7. Start the collector (assuming /usr/local/bin is in your PATH):
 
- $ bvcollect.py &
+    $ bvcollect.py &
 
 In addition, you must configure the broadview agent. This involves two
 steps: editing the device configuration so that the agent knows the IP
@@ -165,13 +168,13 @@ To configure the agent, refer to instructions provided by your vendor.
 The IP address and port of the collector is in the [network] section of
 /etc/broadviewcollector.conf, for example:
 
- [network]
+    [network]
 
- ip_address: 10.14.244.143
- port: 8082
+    ip_address: 10.14.244.143
+    port: 8082
 
 Once the agent is up and running on the networking device, you can use 
-bv-bstclt (included in broadview-lib) to configure BST.
+bv-bstctl.py (included in broadview-lib) to configure BST.
 
 ## Detailed Installation: Monasca API
 
