@@ -39,16 +39,16 @@ class BroadViewPublisher(BroadViewPublisherBase):
 
     def getKafkaProducer(self):
         try:
-	    self._producer = kafka.KafkaProducer(bootstrap_servers=['{}:{}'.format(self._ip_address, self._port)])
+            self._producer = kafka.KafkaProducer(bootstrap_servers=['{}:{}'.format(self._ip_address, self._port)])
         except kafka.errors.NoBrokersAvailable as e:
             LOG.error("BroadViewPublisher: NoBrokersAvailable {}".format(e))
         except:
             LOG.error("Unexpected error: {}".format(sys.exc_info()[0]))
 
     def __init__(self):
-	self._ip_address = "127.0.0.1"
-	self._port = "9092"
-	self._topic = "broadview-bst"
+        self._ip_address = "127.0.0.1"
+        self._port = "9092"
+        self._topic = "broadview-bst"
         self.readConfig()
         self._producer = None
 
@@ -58,13 +58,21 @@ class BroadViewPublisher(BroadViewPublisherBase):
         if not self._producer:
             self.getKafkaProducer()
         if self._producer: 
-	    code = 200
+            code = 200
+        if self.isBST(data):
+            self._topic = "broadview-bst"
             success, sdata = BSTToMonasca().serialize(host, data)
-	    sdata = json.loads(sdata)
+        elif self.isPT(data):
+            self._topic = "broadview-pt"
+            success, sdata = PTToMonasca().serialize(host, data)
+        else:
+            success = False
+        if success:
+            sdata = json.loads(sdata)
             if success: 
-	        for x in sdata:
+                for x in sdata:
                     try:
-			self._producer.send(self._topic, json.dumps(x))
+                        self._producer.send(self._topic, json.dumps(x))
                     except:
                         LOG.info('unable to send to kafka topic {}: {}'.format(self._topic, sys.exc_info()[0]))
             else:

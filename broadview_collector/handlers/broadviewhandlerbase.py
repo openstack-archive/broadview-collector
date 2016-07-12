@@ -20,7 +20,7 @@ class BroadViewHandlerBase(object):
         '''
         return a 2-tuple (data, handled)
 
-        where data is understandable by a downstream serializer
+        where data is understandable by a downstream parser
         (in the case of BST, this would be a bst_parser object),
         and handled is a boolean, True if the POST was recognized, 
         and False if not. 

@@ -18,6 +18,7 @@ from broadviewpublisherbase import BroadViewPublisherBase
 # so use it.
 
 from broadview_collector.serializers.bst_to_monasca import BSTToMonasca
+from broadview_collector.serializers.pt_to_monasca import PTToMonasca
 import json
 import syslog
 
@@ -31,9 +32,15 @@ class BroadViewPublisher(BroadViewPublisherBase):
 
     def publish(self, host, data):
         code = 200
-        success, sdata = BSTToMonasca().serialize(host, data)
-        sdata = json.loads(sdata)
+        if self.isBST(data):
+            success, sdata = BSTToMonasca().serialize(host, data)
+        elif self.isPT(data):
+            success, sdata = PTToMonasca().serialize(host, data)
+        else:
+            success = False
         if success:
+            sdata = json.loads(sdata)
+
             for x in sdata:
                 syslog.syslog(json.dumps(x))
         else:

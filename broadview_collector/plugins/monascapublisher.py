@@ -16,6 +16,7 @@ from broadviewpublisherbase import BroadViewPublisherBase
 from monascaclient import client
 import monascaclient.exc as exc
 from broadview_collector.serializers.bst_to_monasca import BSTToMonasca
+from broadview_collector.serializers.pt_to_monasca import PTToMonasca
 import json
 import ConfigParser
 
@@ -45,7 +46,6 @@ class BroadViewPublisher(BroadViewPublisherBase):
     def __init__(self):
 
         self.readConfig()
-
         try:
             self._auth_kwargs = {
                 'username': self._username,
@@ -65,15 +65,21 @@ class BroadViewPublisher(BroadViewPublisherBase):
     def publish(self, host, data):
         code = 500
         if self._monasca_client:
-	    code = 200
-            success, sdata = BSTToMonasca().serialize(host, data)
-	    sdata = json.loads(sdata)
+            if self.isBST(data):
+                success, sdata = BSTToMonasca().serialize(host, data)
+            elif self.isPT(data):
+                success, sdata = PTToMonasca().serialize(host, data)
+            else:
+                success = False
+                sdata = None
             if success: 
-	        for x in sdata:
+                code = 200
+                sdata = json.loads(sdata)
+                for x in sdata:
                     try:
                         resp = self._monasca_client.metrics.create(**x)
                         if not resp.status_code == 200 and not resp.status_code == 204:
-		            code = resp.status_code
+                            code = resp.status_code
                             break
                     except exc.HTTPException as he:
                         LOG.error('HTTPException code=%s message=%s' % (he.code, he.message))
@@ -82,5 +88,5 @@ class BroadViewPublisher(BroadViewPublisherBase):
         return code
 
     def __repr__(self):
-        return "BroadView Monasca Publisher {_endpoint} {_api_version}".format(**__dict__(self)) 
+        return "BroadView Monasca Publisher {}".format(self.__dict__) 
 

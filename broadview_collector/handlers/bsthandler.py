@@ -25,7 +25,6 @@ class BroadViewHandler(BroadViewHandlerBase):
             handled = parser.process(data)
         except:
             handled = False
-        print handled
         return (parser, handled)
 
     def __repr__(self):

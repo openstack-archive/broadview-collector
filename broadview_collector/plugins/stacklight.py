@@ -54,10 +54,12 @@ class BroadViewPublisher(BroadViewPublisherBase):
 
     def publish(self, host, data):
         code = 500
-        success, sdata = BSTToStacklight().serialize(host, data)
+        success = False
+        if self.isBST(data):
+            success, sdata = BSTToStacklight().serialize(host, data)
         if success: 
             sdata = json.loads(sdata)
-	    for x in sdata:
+            for x in sdata:
                 try:
                     r = requests.post('http://{}:{}'.format(self._ipaddr, self._port), json=sdata, timeout=self._timeout)
                     code = r.status_code

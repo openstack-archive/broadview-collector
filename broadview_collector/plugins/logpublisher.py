@@ -18,6 +18,7 @@ from broadviewpublisherbase import BroadViewPublisherBase
 # so use it. 
 
 from broadview_collector.serializers.bst_to_monasca import BSTToMonasca
+from broadview_collector.serializers.pt_to_monasca import PTToMonasca
 import json
 try:
     from oslo_log import log
@@ -40,7 +41,7 @@ class BroadViewPublisher(BroadViewPublisherBase):
         try:
             self._f = open(self._logfile, "w+")
         except:
-            LOG.info("log publisher: unable to open log file {}".format(self.__logfile))
+            LOG.info("log publisher: unable to open log file {}".format(self._logfile))
 
     def __init__(self):
         LOG.info("log publisher: init")
@@ -53,11 +54,16 @@ class BroadViewPublisher(BroadViewPublisherBase):
             self._f.close()
 
     def publish(self, host, data):
-        LOG.info("log publisher: publish")
         code = 200
-        success, sdata = BSTToMonasca().serialize(host, data)
-        sdata = json.loads(sdata)
+        if self.isBST(data):
+            success, sdata = BSTToMonasca().serialize(host, data)
+        elif self.isPT(data):
+            success, sdata = PTToMonasca().serialize(host, data)
+        else:
+            LOG.info("log publisher is not PT or BST")
+            success = False
         if success: 
+            sdata = json.loads(sdata)
             for x in sdata:
                 print >>self._f, json.dumps(x)
             self._f.flush()

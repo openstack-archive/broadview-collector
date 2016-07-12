@@ -12,19 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from broadviewhandlerbase import BroadViewHandlerBase
 from broadview_lib.pt.pt_parser import PTParser
-from broadview_lib.bst.bst_parser import BSTParser
 
-class BroadViewPublisherBase(object):
+class BroadViewHandler(BroadViewHandlerBase):
     def __init__(self):
         pass
 
-    def publish(self, host, data):
-        raise NotImplementedError
+    def handlePOST(self, path, ctype, length, data):
+        parser = PTParser()
+        try:
+            handled = parser.process(data)
+        except:
+            handled = False
+        return (parser, handled)
 
-    def isBST(self, parser):
-        return isinstance(parser, BSTParser)
-
-    def isPT(self, parser):
-        return isinstance(parser, PTParser)
+    def __repr__(self):
+        return "PT Handler" 
 
