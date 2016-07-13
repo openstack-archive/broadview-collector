@@ -38,20 +38,26 @@ BST statistic names consist of the following:
 * egress-uc-queue
 * egress-uc-queue-group
 
-###Example: "name": "broadview.bst.egress-port-service-pool"
+###Example
+
+    "name": "broadview.bst.egress-port-service-pool"
 
 # timestamp
 
 The timestamp field is a floating point value which represents that time in 
 microseconds of the statistic. 
 
-###Example: "timestamp": 1459361118000.0
+###Example
+
+    "timestamp": 1459361118000.0
 
 # value
 
 The value field represents that reported value for the statistic.
 
-###Example: "value": 366
+###Example
+
+    "value": 366
 
 # dimensions
 
@@ -92,7 +98,7 @@ via the "dimension" field).
 
 * asic-id - the ASIC pertaining to the statistic
 
-###Example:
+###Example
 
     {"timestamp": 1459361118000.0, "name": "broadview.bst.device", "value": 46, "dimensions": {"asic-id": "20"}}
 
@@ -103,7 +109,7 @@ via the "dimension" field).
 * port - the port impacted by the statistic
 * stat - either um-share-buffer-count or um-headroom-buffer-count
 
-###Example:
+###Example
 
     {"timestamp": 1459361118000.0, "name": "broadview.bst.ingress-port-priority-group", "value": 45500, "dimensions": {"asic-id": "20", "stat": "um-share-buffer-count", "priority-group": 5, "port": "2"}}
 
@@ -116,7 +122,7 @@ via the "dimension" field).
 * port - the port impacted by the statistic
 * stat - um-share-buffer-count
 
-###Example:
+###Example
 
     {"timestamp": 1459361118000.0, "name": "broadview.bst.ingress-port-service-pool", "value": 324, "dimensions": {"asic-id": "20", "stat": "um-share-buffer-count", "service-pool": 5, "port": "2"}}
 
@@ -126,7 +132,7 @@ via the "dimension" field).
 * service-pool - the service pool associated with the stat
 * stat - um-share-buffer-count
 
-###Example:
+###Example
 
     {"timestamp": 1459361118000.0, "name": "broadview.bst.ingress-service-pool", "value": 3240, "dimensions": {"asic-id": "20", "stat": "um-share-buffer-count", "service-pool": 1}}
 
@@ -136,7 +142,7 @@ via the "dimension" field).
 * queue - the queue associated with the statistic
 * stat - either cpu-buffer-count or cpu-queue-entries 
 
-###Example:
+###Example
 
     {"timestamp": 1459361118000.0, "name": "broadview.bst.egress-cpu-queue", "value": 4566, "dimensions": {"queue": 3, "asic-id": "20", "stat": "cpu-buffer-count"}}
 
@@ -149,7 +155,7 @@ via the "dimension" field).
 * port - the port associated with the statistic
 * stat - either mc-buffer-count or mc-queue-entries 
 
-###Example:
+###Example
 
     {"timestamp": 1459361118000.0, "name": "broadview.bst.egress-mc-queue", "value": 34, "dimensions": {"queue": 1, "asic-id": "20", "stat": "mc-buffer-count", "port": "1"}}
 
@@ -163,7 +169,7 @@ via the "dimension" field).
 * port - the port associated with the statistic
 * stat - either um-share-buffer-count, mc-share-buffer-count or mc-share-queue-entries
 
-###Example:
+###Example
 
     {"timestamp": 1459361118000.0, "name": "broadview.bst.egress-port-service-pool", "value": 0, "dimensions": {"asic-id": "20", "stat": "um-share-buffer-count", "service-pool": 5, "port": "2"}}
 
@@ -175,7 +181,7 @@ via the "dimension" field).
 
 * asic-id - the ASIC pertaining to the statistic
 
-###Example:
+###Example
 
     {"timestamp": 1459361118000.0, "name": "broadview.bst.egress-rqe-queue", "value": 3333, "dimensions": {"queue": 2, "asic-id": "20", "stat": "rqe-buffer-count"}}
 
@@ -188,7 +194,7 @@ via the "dimension" field).
 * service-pool - the service pool associated with the statistic
 * stat - either um-share-buffer-count, mc-share-buffer-count or mc-share-queue-entries
 
-###Example:
+###Example
 
     {"timestamp": 1459361118000.0, "name": "broadview.bst.egress-service-pool", "value": 0, "dimensions": {"asic-id": "20", "stat": "um-share-buffer-count", "service-pool": 2}}
 
@@ -204,7 +210,7 @@ via the "dimension" field).
 * port - the port associated with the statistic
 * stat - uc-queue-buffer-count
 
-###Example:
+###Example
 
     {"timestamp": 1459361118000.0, "name": "broadview.bst.egress-uc-queue", "value": 1111, "dimensions": {"queue": 6, "asic-id": "20", "stat": "uc-queue-buffer-count", "port": "0"}}
 
@@ -214,7 +220,7 @@ via the "dimension" field).
 * queue-group - the queue group associated with the statistic
 * stat - uc-buffer-count
 
-###Example:
+###Example
 
     {"timestamp": 1459361118000.0, "name": "broadview.bst.egress-uc-queue-group", "value": 2222, "dimensions": {"queue-group": 6, "asic-id": "20", "stat": "uc-buffer-count"}}
 
