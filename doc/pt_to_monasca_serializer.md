@@ -6,8 +6,9 @@ key/value pairs:
 
 * timestamp - event time in microseconds (floating point)
 * name - metric name
-* value - metric value (however, meta-data the dimensions field determines
-if the value is valid or not, for some reports, there is no associated value
+* value - metric value (the "ignore-value" dimensions field determines
+if the value is valid or not, for many PT reports, there is no associated
++value)
 * dimensions - a set of key/value pairs that provide additional metadata
 for the metric
 
@@ -78,13 +79,18 @@ The IPV4 address of the agent that generated the report
 When ignore-value is 0, generally the data of the report will be contained
 as a dimension.
 
-packet-trace-profile 
-====================
+Reports
+=======
+
+packet-trace-profile
+--------------------
 
 This report can be invoked to report lag-link-resolution or ecmp-resolution
 data, as specified by the realm dimension (see below). 
 
-## value - ignored for this report
+## value 
+
+ignored for this report
 
 ## dimensions 
 
@@ -151,11 +157,13 @@ An array of ecmp members. Each member is an object that contains an "ip",
 
 
 packet-trace-lag-resolution
-===========================
+---------------------------
 
 This report can be invoked to report lag-link-resolution.
 
-## value - ignored for this report
+## value 
+
+ignored for this report
 
 ## dimensions 
 
@@ -186,11 +194,13 @@ Associated port
     {"timestamp": 1468367668000.0, "name": "broadview.pt.packet-trace-lag-resolution", "value": 0, "dimensions": {"lag-id": "1", "asic-id": "1", "ignore-value": 1, "bv-agent": "10.14.244.199", "lag-members": ["1", "2", "3", "4"], "dst-lag-member": "4", "port": "1"}}
 
 packet-trace-ecmp-resolution
-============================
+----------------------------
 
 This report can be invoked to report ecmp-resolution
 
-## value - ignored for this report
+## value 
+
+ignored for this report
 
 ## dimensions 
 
@@ -228,7 +238,7 @@ An array of ecmp members. Each member is an object that contains an "ip",
     {"timestamp": 1468367675000.0, "name": "broadview.pt.packet-trace-ecmp-resolution", "value": 0, "dimensions": {"asic-id": "1", "ecmp-dst-member": "100005", "ignore-value": 1, "bv-agent": "10.14.244.199", "ecmp-dst-port": "41", "port": "1", "ecmp-members": [{"ip": "2.2.2.2", "id": "100004", "port": "28"}, {"ip": "6.6.6.1", "id": "100005", "port": "41"}], "ecmp-group-id": "200256", "ecmp-next-hop-ip": "6.6.6.2"}}
 
 packet-trace-drop-reason
-========================
+------------------------
 
 This report contains the following data
 
@@ -267,12 +277,14 @@ An array of associated ports, each member a string
     {"timestamp": 1468392886000000, "name": "broadview.pt.packet-trace-drop-reason", "value": 3, "dimensions": {"asic-id": "1", "port-list": ["1", "5", "6", "10-15"], "send-dropped-packet": true, "ignore-value": 0, "bv-agent": "10.14.244.199", "trace-profile": false, "reason": "l2-lookup-failure", "packet-threshold": 0}}
 
 packet-trace-drop-counter-report
-================================
+--------------------------------
 
 This report profiles a packet drop counter report for a specific drop
 realm
 
-## value - the drop count
+## value 
+
+the drop count
 
 ## dimensions 
 
@@ -291,4 +303,3 @@ Associated port
 ## Example
 
     {"timestamp": 1468392895000000, "name": "broadview.pt.packet-trace-drop-counter-report", "value": 10, "dimensions": {"asic-id": "1", "ignore-value": 0, "realm": "vlan-xlate-miss-drop", "port": "1", "bv-agent": "10.14.244.199"}}
-
