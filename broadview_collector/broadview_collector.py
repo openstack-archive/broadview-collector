@@ -132,7 +132,7 @@ class BroadViewCollector(object):
             if handled: 
                 for y in self._publishers:
                     code = y.publish(src, o)
-		    if not code == 200:
+                    if not code == 200:
                         LOG.info("handlePOST: {} failed to publish, code: {}".format(y, code))
                 retcode = 200
                 break
@@ -151,7 +151,7 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
         except:
             e = sys.exc_info()[0]
             LOG.info("broadview_collector: do_POST missing content-type {}".format(e))
-            ctype = None
+            ctype = "application/json"
         try:
             length = int(self.headers.getheader('content-length'))
         except:
@@ -159,7 +159,11 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
             LOG.info("broadview_collector: do_POST missing content-length {}".format(e))
             length = 0
         if ctype and "json" in ctype.lower():
-           data = ast.literal_eval(json.loads(self.rfile.read(length)))
+           c = self.rfile.read(length)
+           try:
+               data = ast.literal_eval(json.loads(c))
+           except:
+               data = json.loads(c)
            code = collector.handlePOST(self.path, ctype, length, self.client_address[0], data )
            data = json.dumps({})
            try:
