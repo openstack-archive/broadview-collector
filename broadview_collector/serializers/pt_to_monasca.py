@@ -61,6 +61,8 @@ class PTToMonasca(BroadViewSerializerBase):
                     m["dimensions"]["lag-id"] = r.getLAGID()
                     m["dimensions"]["dst-lag-member"] = r.getDstLAGMember()
                     m["dimensions"]["lag-members"] = r.getLAGMembers()
+                    m["dimensions"]["fabric-trunk-members"] = r.getFabricTrunkMembers()
+                    m["dimensions"]["fabric-trunk-id"] = r.getFabricTrunkID()
                     m["dimensions"]["ignore-value"] = 1
                     ret.append(m)
                 else:
@@ -128,6 +130,8 @@ class PTToMonasca(BroadViewSerializerBase):
             m["dimensions"]["lag-id"] = ll.getLAGID()
             m["dimensions"]["dst-lag-member"] = ll.getDstLAGMember()
             m["dimensions"]["lag-members"] = ll.getLAGMembers()
+            m["dimensions"]["fabric-trunk-members"] = ll.getFabricTrunkMembers()
+            m["dimensions"]["fabric-trunk-id"] = ll.getFabricTrunkID()
             m["dimensions"]["ignore-value"] = 1
             m["value"] = 0
             ret.append(m)
@@ -212,7 +216,9 @@ class TestSerializer(unittest.TestCase):
                             "data": {
                                 "lag-id": "2",
                                 "lag-members": ["1", "2", "3", "4"],
-                                "dst-lag-member": "4"
+                                "dst-lag-member": "4",
+                                "fabric-trunk-id": "6",
+                                "fabric-trunk-members": ["27", "28", "29"],
                             }
                         },
                         {
@@ -245,7 +251,9 @@ class TestSerializer(unittest.TestCase):
                             "data": {
                                 "lag-id": "2",
                                 "lag-members": ["5", "6", "7", "8"],
-                                "dst-lag-member": "5"
+                                "dst-lag-member": "5",
+                                "fabric-trunk-id": "7",
+                                "fabric-trunk-members": ["37", "38", "39"],
                             }
                         },
                         {
@@ -290,7 +298,9 @@ class TestSerializer(unittest.TestCase):
                             "3",
                             "4"
                         ],
-                        "dst-lag-member": "4"
+                        "dst-lag-member": "4",
+                        "fabric-trunk-id": "8",
+                        "fabric-trunk-members": ["47", "48", "49"],
                     }
                 },
                 {
@@ -303,7 +313,9 @@ class TestSerializer(unittest.TestCase):
                             "7",
                             "8"
                         ],
-                        "dst-lag-member": "7"
+                        "dst-lag-member": "7",
+                        "fabric-trunk-id": "9",
+                        "fabric-trunk-members": ["57", "58", "59"],
                     }
                 }
             ],
@@ -539,6 +551,13 @@ class TestSerializer(unittest.TestCase):
         self.assertEqual(dim["port"], "1")
         self.assertTrue("dst-lag-member" in dim)
         self.assertEqual(dim["dst-lag-member"], "4")
+        self.assertTrue("fabric-trunk-id" in dim)
+        self.assertEqual(dim["fabric-trunk-id"], "6")
+        self.assertTrue("fabric-trunk-members" in dim)
+        self.assertEqual(len(dim["fabric-trunk-members"]), 3)
+        self.assertTrue("27" in dim["fabric-trunk-members"])
+        self.assertTrue("28" in dim["fabric-trunk-members"])
+        self.assertTrue("29" in dim["fabric-trunk-members"])
 
         self.assertTrue("timestamp" in data[1])
         timestamp = int(data[1]["timestamp"]) / 1000
@@ -658,6 +677,13 @@ class TestSerializer(unittest.TestCase):
         self.assertEqual(dim["port"], "1")
         self.assertTrue("dst-lag-member" in dim)
         self.assertEqual(dim["dst-lag-member"], "4")
+        self.assertTrue("fabric-trunk-id" in dim)
+        self.assertEqual(dim["fabric-trunk-id"], "8")
+        self.assertTrue("fabric-trunk-members" in dim)
+        self.assertEqual(len(dim["fabric-trunk-members"]), 3)
+        self.assertTrue("47" in dim["fabric-trunk-members"])
+        self.assertTrue("48" in dim["fabric-trunk-members"])
+        self.assertTrue("49" in dim["fabric-trunk-members"])
 
         self.assertTrue("timestamp" in data[1])
         timestamp = int(data[0]["timestamp"]) / 1000
@@ -684,6 +710,13 @@ class TestSerializer(unittest.TestCase):
         self.assertEqual(dim["port"], "2")
         self.assertTrue("dst-lag-member" in dim)
         self.assertEqual(dim["dst-lag-member"], "7")
+        self.assertTrue("fabric-trunk-id" in dim)
+        self.assertEqual(dim["fabric-trunk-id"], "9")
+        self.assertTrue("fabric-trunk-members" in dim)
+        self.assertEqual(len(dim["fabric-trunk-members"]), 3)
+        self.assertTrue("57" in dim["fabric-trunk-members"])
+        self.assertTrue("58" in dim["fabric-trunk-members"])
+        self.assertTrue("59" in dim["fabric-trunk-members"])
 
     def test_packet_trace_ecmp_resolution_1(self):
         rep = PTParser()

@@ -41,7 +41,9 @@ class PTProfile(PTSim):
                             "data": {
                                 "lag-id": "2",
                                 "lag-members": ["1", "2", "3", "4"],
-                                "dst-lag-member": "4"
+                                "dst-lag-member": "4",
+                                "fabric-trunk-id": "6",
+                                "fabric-trunk-members": ["27", "28", "29"],
                             }
                         },
                         {
@@ -74,7 +76,9 @@ class PTProfile(PTSim):
                             "data": {
                                 "lag-id": "3",
                                 "lag-members": ["5","6","7","8"],
-                                "dst-lag-member": "6"
+                                "dst-lag-member": "6",
+                                "fabric-trunk-id": "6",
+                                "fabric-trunk-members": ["27", "28", "29"],
                             }
                         },
                         {

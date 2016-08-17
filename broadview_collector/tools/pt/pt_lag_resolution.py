@@ -43,7 +43,9 @@ class PTLAGResolution(PTSim):
                             "3",
                             "4"
                         ],
-                        "dst-lag-member": "4"
+                        "dst-lag-member": "4",
+                        "fabric-trunk-id": "6",
+                        "fabric-trunk-members": ["27", "28", "29"],
                     }
                 },
                 {
@@ -56,7 +58,9 @@ class PTLAGResolution(PTSim):
                             "7",
                             "8"
                         ],
-                        "dst-lag-member": "7"
+                        "dst-lag-member": "7",
+                        "fabric-trunk-id": "6",
+                        "fabric-trunk-members": ["27", "28", "29"],
                     }
                 }
             ],
