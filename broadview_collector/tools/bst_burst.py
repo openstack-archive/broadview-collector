@@ -19,12 +19,12 @@ import time
 
 # Change these to the host and port the collector is listening on
 
-host = "10.14.244.106"
+host = "127.0.0.1"
 port = 8082
 
 '''
 
-Program to generate a similated microburst.
+Program to generate a simulated microburst.
 
 A great way to use this is from a loop in bash:
 

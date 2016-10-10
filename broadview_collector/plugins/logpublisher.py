@@ -19,6 +19,7 @@ from broadviewpublisherbase import BroadViewPublisherBase
 
 from broadview_collector.serializers.bst_to_monasca import BSTToMonasca
 from broadview_collector.serializers.pt_to_monasca import PTToMonasca
+from broadview_collector.serializers.bhd_to_monasca import BHDToMonasca
 import json
 try:
     from oslo_log import log
@@ -59,8 +60,10 @@ class BroadViewPublisher(BroadViewPublisherBase):
             success, sdata = BSTToMonasca().serialize(host, data)
         elif self.isPT(data):
             success, sdata = PTToMonasca().serialize(host, data)
+        elif self.isBHD(data):
+            success, sdata = BHDToMonasca().serialize(host, data)
         else:
-            LOG.info("log publisher is not PT or BST")
+            LOG.info("log publisher is not PT, BHD, or BST")
             success = False
         if success: 
             sdata = json.loads(sdata)

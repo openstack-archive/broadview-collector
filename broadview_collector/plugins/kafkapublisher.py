@@ -15,6 +15,8 @@
 from broadviewpublisherbase import BroadViewPublisherBase
 import kafka 
 from broadview_collector.serializers.bst_to_monasca import BSTToMonasca
+from broadview_collector.serializers.pt_to_monasca import PTToMonasca
+from broadview_collector.serializers.bhd_to_monasca import BHDToMonasca
 import json
 import ConfigParser
 import sys
@@ -65,6 +67,9 @@ class BroadViewPublisher(BroadViewPublisherBase):
         elif self.isPT(data):
             self._topic = "broadview-pt"
             success, sdata = PTToMonasca().serialize(host, data)
+        elif self.isBHD(data):
+            self._topic = "broadview-bhd"
+            success, sdata = BHDToMonasca().serialize(host, data)
         else:
             success = False
         if success:
