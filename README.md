@@ -1,3 +1,10 @@
+Note
+====
+
+This repo supports versions of BroadView up to, but not including, version
+3 of the agent protocol. For all later versions of BroadView, please visit
+https://github.com/Broadcom-Switch/broadview-collector.
+
 # Overview
 
 `broadview-collector` is a service capable of receiving and publishing 
