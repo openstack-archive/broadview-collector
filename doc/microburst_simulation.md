@@ -70,7 +70,7 @@ Instead of supplying an auth token, you might want to simply click on the
 document existed with this setting. To obtain an auth token, run the
 following coomand:
 
-    curl -s -X POST http://localhost:35357/v2.0/tokens -d '{"auth": {"passwordCredentials": {"username":"mini-mon", "password":"password"}, "tenantName":"mini-mon"}}' -H "Content-type: application/json"
+    curl -s -X POST http://localhost:5000/v2.0/tokens -d '{"auth": {"passwordCredentials": {"username":"mini-mon", "password":"password"}, "tenantName":"mini-mon"}}' -H "Content-type: application/json"
 
 The above will generate output that contains a token, a portion of which is
 shown below:
