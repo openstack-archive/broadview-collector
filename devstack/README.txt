@@ -60,7 +60,7 @@ LOG_COLOR=False
 disable_all_services
 enable_service rabbit mysql key tempest
 
-enable_plugin broadview-collector git://git.openstack.org/openstack/broadview-collector 
+enable_plugin broadview-collector https://git.openstack.org/openstack/broadview-collector 
 
 Restarting the Collector
 ------------------------
@@ -119,7 +119,7 @@ details.
 
 2. Add the following the end of their local.conf:
 
-enable_plugin broadview-collector git://git.openstack.org/openstack/broadview-collector 
+enable_plugin broadview-collector https://git.openstack.org/openstack/broadview-collector 
 
 3. Run devstack as usual with ./stack.sh
 
