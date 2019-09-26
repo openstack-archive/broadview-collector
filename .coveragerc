@@ -1,7 +1,0 @@
-[run]
-branch = True
-source = broadview_collector
-omit = broadview_collector/openstack/*
-
-[report]
-ignore_errors = True
